@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
   <title>Book Notes</title>
 </head>
 
@@ -14,5 +17,113 @@
   <div class="col-lg-8 mx-auto p-4 py-md-5">
 
     <main>
-      <h1>Hello</h1>
+      <h1>Book Notes</h1>
+      <style>
+        /* img {
+          max-width: 200px;
+          height: 70%;
+          height: auto;
+        } */
+      </style>
+
+      <div class="row">
+        <% for(let i = 0;i<result.length;i++) { %>
+        <div class="col-sm-2 mb-3 mb-sm-0">
+          <div class="card">
+            <img src="<%= result[i].thumbnail.smallThumbnail%>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><%= result[i].title %></h5>
+              <p class="card-text"><%= result[i].notes %><br /><small class="text-body-secondary">Last read on: <%= result[i].date_read[0] %></small></p>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_<%= result[i].id %>">
+                View details
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="modal_<%= result[i].id%>" tabindex="-1" aria-labelledby="<%= result[i].id %>_label" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="<%= result[i].id %>_label">
+                        <%= result[i].title%> by <%= result[i].authors %>
+                      </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <%- result[i].description %>
+                      <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Published date
+                          <span class="badge bg-primary rounded-pill"><%= result[i].published_date.toLocaleDateString() %></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Page count
+                          <span class="badge bg-primary rounded-pill"><%= result[i].page_count %></span>
+                        </li>
+                        <% if (result[i].isbn_10) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          ISBN 10
+                          <span class="badge bg-primary rounded-pill"><%= result[i].isbn_10 %></span>
+                        </li>
+                        <% } %>
+                        <% if (result[i].isbn_13) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          ISBN 13
+                          <span class="badge bg-primary rounded-pill"><%= result[i].isbn_13 %></span>
+                        </li>
+                        <% } %>
+                        <% if (result[i].categories) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">Categories</div>
+                            <% const cat = result[i].categories %>
+                            <ol class="list-group list-group-numbered ">
+
+                              <% for (const key in cat) { %>
+                              <% if (cat.hasOwnProperty(key)) { %>
+                              <li class="list-group-item"><%= cat[key] %></li>
+
+                              <% } %>
+                              <% } %>
+                            </ol>
+                          </div>
+                          <span class="badge bg-primary rounded-pill"><%= result[i].categories.length %></span>
+                        </li>
+                        <% } %>
+                        <% if (result[i].average_rating) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Average Rating
+                          <span class="badge bg-primary rounded-pill"><%= result[i].average_rating %></span>
+                        </li>
+                        <% } %>
+                        <% if (result[i].ratings_count) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Number of Ratings
+                          <span class="badge bg-primary rounded-pill"><%= result[i].ratings_count %></span>
+                        </li>
+                        <% } %>
+                        <% if (result[i].retail_price) { %>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Retail Price
+                          <span class="badge bg-primary rounded-pill"><%= result[i].retail_price %> <%= result[i].currency_code %></span>
+                        </li>
+                        <% } %>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+
+
       <%- include("partials/footer.ejs") %>

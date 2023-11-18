@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+  <title>Book Notes</title>
+</head>
+
+<body>
+  <%- include('partials/darkModeToggle.ejs') %>
+  <%- include('partials/navbar.ejs') %>
+  <div class="col-lg-8 mx-auto p-4 py-md-5">
+    <main>
+      <form action="/new" method="post">
+        <select id="search_book" class="form-select" aria-label="Search the book here" name="book">
+        </select>
+        <div class="mb-3 mt-3">
+          <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" max="10" min="0">
+          <label for="rating">Rating</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="dateRead" name="dateRead" value="<%= today %>">
+          <label for="dateRead">Date Read</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="timesRead" placeholder="Number of times read" name="timesRead" min="0">
+          <label for="timesRead">Times Read</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <textarea class="form-control" placeholder="Leave a note here" id="notes" name="notes"></textarea>
+          <label for="notes">Notes</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <select class="form-select" id="status" aria-label="Status of book" name="status">
+            <option selected>Open this select menu</option>
+            <option value="reading">Reading</option>
+            <option value="dropped">Dropped</option>
+            <option value="completed">Completed</option>
+          </select>
+          <label for="status">Status of book</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <select class="form-select" id="type" aria-label="Type of book" name="type">
+            <option selected>Open this select menu</option>
+            <option value="audiobook">Audiobook</option>
+            <option value="ebook">Ebook</option>
+            <option value="physical">Physical</option>
+          </select>
+          <label for="type">Type of book</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+      <%- include("partials/footer.ejs") %>
