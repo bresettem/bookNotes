@@ -32,19 +32,25 @@
           <div class="card">
             <img src="<%= result[i].thumbnail.smallThumbnail%>" class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title"><%= result[i].title %></h5>
+              <h5 class="card-title">id: <%= result[i].id %> <%= result[i].title %> <a id="edit_<%=result[i].books_id%>" href="/edit?id=<%=result[i].books_id%>">Edit</a>
+                <form id="deleteForm" method="POST" action="/delete">
+                  <input type="hidden" name="deleteItemId" value="<%= result[i].books_id %>">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                </form>
+
+              </h5>
               <p class="card-text">Rating: <%= result[i].ratings %><br /><%= result[i].notes %><br /><small class="text-body-secondary">Last read on: <%= result[i].date_read[0] %><br />Times Read: <%=result[i].times_read%><br />Type: <%=result[i].type%></small></p>
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_<%= result[i].id %>">
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_<%= result[i].books_id %>">
                 View details
               </button>
 
               <!-- Modal -->
-              <div class="modal fade" id="modal_<%= result[i].id%>" tabindex="-1" aria-labelledby="<%= result[i].id %>_label" aria-hidden="true">
+              <div class="modal fade" id="modal_<%= result[i].books_id%>" tabindex="-1" aria-labelledby="<%= result[i].books_id %>_label" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="<%= result[i].id %>_label">
+                      <h1 class="modal-title fs-5" id="<%= result[i].books_id %>_label">
                         <%= result[i].title%> by <%= result[i].authors %>
                       </h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
